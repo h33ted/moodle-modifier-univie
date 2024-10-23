@@ -1,11 +1,11 @@
 const path = require('path');
 
 module.exports = {
-    // モード値を production に設定すると最適化された状態で、
-    // development に設定するとソースマップ有効でJSファイルが出力される
+    // When the mode value is set to 'production', the output is optimized,
+    // and when set to 'development', the JS files are output with source maps enabled.
     // mode: 'development',
 
-    // メインとなるJavaScriptファイル（エントリーポイント）
+    // The main JavaScript file (entry point)
     entry: {
         topPage: path.resolve(__dirname, './src/content_scripts/topPage.ts'),
         notTopPage: path.resolve(
@@ -24,22 +24,21 @@ module.exports = {
     module: {
         rules: [
             {
-                // 拡張子 .ts の場合
+                // For files with the .ts extension
                 test: /\.ts$/,
-                // TypeScript をコンパイルする
+                // Use ts-loader to compile TypeScript
                 use: 'ts-loader',
                 exclude: /node_modules/,
             },
         ],
     },
 
-    // import 文で .ts ファイルを解決するため
-    // これを定義しないと import 文で拡張子を書く必要が生まれる。
-    // フロントエンドの開発では拡張子を省略することが多いので、
-    // 記載したほうがトラブルに巻き込まれにくい。
+    // To resolve .ts files when using import statements
+    // Without this, you would need to specify the file extension in import statements.
+    // In frontend development, it's common to omit the file extension, so this helps avoid potential issues.
     resolve: {
-        // 拡張子を配列で指定
+        // Specify extensions as an array
         extensions: ['.ts', '.js'],
     },
-    devtool: 'cheap-module-source-map', // これがないとsource-mapが原因のエラーが出る
+    devtool: 'cheap-module-source-map', // Without this, source-map-related errors may occur
 };
